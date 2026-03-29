@@ -257,14 +257,126 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // ===== CONTACT FORM =====
-  window.handleContactForm = function (e) {
-    e.preventDefault();
-    var form = e.target;
-    var name = form.querySelector('#name').value.trim();
-    if (name) {
-      alert('Thank you, ' + name + '! Your message has been sent. We will get back to you soon.');
-      form.reset();
+  window.handleSubmit = function (e) {
+    // e.preventDefault(); // Prevent default redirect
+    const form = document.getElementById('contactForm');
+    const submitBtn = document.querySelector('.submit-btn');
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Sending...';
     }
-  };
+    
+    form.submit();
+
+    let successElement = document.getElementById('successMsg');
+    setTimeout(() => {
+        if (successElement) {
+            successElement.classList.add('show');
+        }
+        if(submitBtn){
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'Send Message';
+        }
+    }, 2000);
+
+    setTimeout(() => {
+        if (successElement) {
+            successElement.classList.remove('show');
+        }
+    }, 5000);
+
+    // Reset form
+    setTimeout(() => {
+        form.reset();
+    }, 2000);
+
+  }
+
+    
 });
+
+/* ===== FLOATING REACH-OUT BUTTON & MODAL ===== */
+(function() {
+  const reachBtn = document.getElementById('floatingReachBtn');
+  const modalOverlay = document.getElementById('inquiryModalOverlay');
+  if (!reachBtn || !modalOverlay) return;
+
+  const modalClose = modalOverlay.querySelector('.inquiry-modal-close');
+  const modalForm = document.getElementById('modalContactForm');
+  const modalSuccessMsg = document.getElementById('modalSuccessMsg');
+  const modalSubmitBtn = modalOverlay.querySelector('.modal-submit-btn');
+
+  let idleTimer;
+
+  function resetIdleTimer() {
+    reachBtn.classList.remove('dimmed');
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(function() {
+      if (!modalOverlay.classList.contains('active')) {
+        reachBtn.classList.add('dimmed');
+      }
+    }, 4000);
+  }
+
+  ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'].forEach(function(evt) {
+    window.addEventListener(evt, resetIdleTimer, { passive: true });
+  });
+
+  resetIdleTimer();
+
+  reachBtn.addEventListener('click', function() {
+    modalOverlay.classList.remove('closing');
+    modalOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    reachBtn.classList.remove('dimmed');
+    clearTimeout(idleTimer);
+  });
+
+  function closeModal() {
+    modalOverlay.classList.add('closing');
+    setTimeout(function() {
+      modalOverlay.classList.remove('active', 'closing');
+      document.body.style.overflow = '';
+      resetIdleTimer();
+    }, 350);
+  }
+
+  modalClose.addEventListener('click', closeModal);
+
+  modalOverlay.addEventListener('click', function(e) {
+    if (e.target === modalOverlay) closeModal();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal();
+  });
+
+  if (modalForm) {
+    modalForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (modalSubmitBtn) {
+        modalSubmitBtn.disabled = true;
+        modalSubmitBtn.innerText = 'Sending...';
+      }
+      modalForm.submit();
+      setTimeout(function() {
+        if (modalSuccessMsg) modalSuccessMsg.classList.add('show');
+        if (modalSubmitBtn) {
+          modalSubmitBtn.disabled = false;
+          modalSubmitBtn.innerText = 'Send Message';
+        }
+      }, 2000);
+      setTimeout(function() {
+        if (modalSuccessMsg) modalSuccessMsg.classList.remove('show');
+      }, 3000);
+      setTimeout(function() {
+        modalForm.reset();
+      }, 2000);
+
+      setTimeout(function() {
+        closeModal();
+      }, 4000);
+    });
+  }
+})();

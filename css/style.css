@@ -851,6 +851,28 @@ header {
   min-height: 120px;
 }
 
+#successMsg{
+  background-color: var(--primary-light);
+  height: auto;
+  padding: 20px 30px;
+  border-radius: 4px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 16px;
+  position: fixed;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  z-index: 1000;
+  text-align: center;
+  transition: top 1s ease, opacity 1s ease;
+  opacity: 0;
+}
+
+#successMsg.show {
+  transform: translateX(-50%) translateY(20px);
+  opacity: 1;
+}
 .contact-vector {
   flex: 1;
   display: flex;
@@ -1370,12 +1392,30 @@ footer {
     padding: 0 25px;
   }
 
+  .slider-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 0.95rem;
+  }
+
+  .slider-btn.prev {
+    left: 4px;
+  }
+
+  .slider-btn.next {
+    right: 4px;
+  }
+
   .slider-wrapper,
   .slide-img {
     max-height: 350px;
     height: 350px;
   }
 
+  .slider-dots .dot {
+    width: 6px;
+    height: 6px;
+  }
   .features-grid {
     grid-template-columns: 1fr;
   }
@@ -1396,6 +1436,12 @@ footer {
 
   .section-title {
     font-size: 1.8rem;
+  }
+
+  #successMsg{
+    padding: 10px 15px;
+    font-weight: 400;
+    font-size: 12px;
   }
 }
 
@@ -1499,4 +1545,245 @@ footer {
 .tc-hero p {
   animation: heroFadeIn 0.7s 0.2s ease forwards;
   opacity: 0;
+}
+
+/* ===== FLOATING REACH-OUT BUTTON ===== */
+.floating-reach-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1100;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(46, 125, 50, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.6s ease, transform 0.3s ease, background 0.3s ease;
+  opacity: 1;
+}
+
+.floating-reach-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: #fff;
+}
+
+.floating-reach-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(46, 125, 50, 0.5);
+}
+
+.floating-reach-btn.dimmed {
+  opacity: 0.35;
+}
+
+/* ===== INQUIRY MODAL ===== */
+.inquiry-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+  padding: 20px;
+}
+
+.inquiry-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.inquiry-modal {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 36px 32px;
+  position: relative;
+  transform: translateY(40px) scale(0.95);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+}
+
+.inquiry-modal-overlay.active .inquiry-modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.inquiry-modal-overlay.closing .inquiry-modal {
+  transform: translateY(30px) scale(0.95);
+  opacity: 0;
+  transition: transform 0.25s ease-in, opacity 0.25s ease-in;
+}
+
+.inquiry-modal-overlay.closing {
+  opacity: 0;
+  transition: opacity 0.3s ease 0.05s, visibility 0.3s ease 0.05s;
+}
+
+.inquiry-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #666;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.inquiry-modal-close:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.inquiry-modal h2 {
+  font-size: 1.5rem;
+  color: var(--primary-dark);
+  margin-bottom: 6px;
+}
+
+.inquiry-modal .modal-subtitle {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+}
+
+.inquiry-modal .form-group {
+  margin-bottom: 18px;
+}
+
+.inquiry-modal .form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--dark);
+  font-size: 0.9rem;
+}
+
+.inquiry-modal .form-group input,
+.inquiry-modal .form-group textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.inquiry-modal .form-group input:focus,
+.inquiry-modal .form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.inquiry-modal .form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.inquiry-modal .modal-submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.inquiry-modal .modal-submit-btn:hover {
+  background: var(--primary-dark);
+}
+
+.inquiry-modal #modalSuccessMsg {
+  display: none;
+  text-align: center;
+  color: var(--primary);
+  font-weight: 600;
+  margin-top: 14px;
+  font-size: 0.95rem;
+}
+
+.inquiry-modal #modalSuccessMsg.show {
+  display: block;
+}
+
+/* Responsive - tablet */
+@media (max-width: 992px) {
+  .floating-reach-btn {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    bottom: 24px;
+    right: 24px;
+  }
+
+  .floating-reach-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Responsive - mobile */
+@media (max-width: 768px) {
+  .floating-reach-btn {
+    padding: 10px 16px;
+    font-size: 0.8rem;
+    bottom: 16px;
+    right: 16px;
+    gap: 6px;
+  }
+
+  .floating-reach-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .inquiry-modal {
+    padding: 28px 20px;
+    border-radius: 12px;
+    max-height: 85vh;
+  }
+
+  .inquiry-modal h2 {
+    font-size: 1.25rem;
+  }
+
+  .inquiry-modal-close {
+    top: 10px;
+    right: 10px;
+    width: 32px;
+    height: 32px;
+    font-size: 1.3rem;
+  }
+
+  .inquiry-modal-overlay {
+    padding: 12px;
+  }
 }

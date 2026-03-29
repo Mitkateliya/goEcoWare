@@ -154,6 +154,45 @@
     </div>
   </footer>
 
+  <!-- FLOATING REACH-OUT BUTTON -->
+  <button class="floating-reach-btn" id="floatingReachBtn">
+    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/></svg>
+    Reach Us
+  </button>
+
+  <!-- INQUIRY MODAL -->
+  <div class="inquiry-modal-overlay" id="inquiryModalOverlay">
+    <div class="inquiry-modal">
+      <button class="inquiry-modal-close" aria-label="Close">&times;</button>
+      <h2>Send Us a Message</h2>
+      <p class="modal-subtitle">We'd love to hear from you. Fill in the details below.</p>
+      <form id="modalContactForm"
+            action="https://docs.google.com/forms/d/e/1FAIpQLSf1f93qaw5IaZWHeFwjUjrSIe3wzDFZrGvl0RIuKi4Ryq7tWQ/formResponse"
+            method="POST"
+            target="modal_hidden_iframe">
+        <div class="form-group">
+          <label for="modalName">Full Name</label>
+          <input type="text" id="modalName" name="entry.1777098069" placeholder="Enter your full name" required>
+        </div>
+        <div class="form-group">
+          <label for="modalPhone">Phone Number</label>
+          <input type="tel" id="modalPhone" name="entry.843369120" placeholder="Enter your phone number" required>
+        </div>
+        <div class="form-group">
+          <label for="modalEmail">Email Address</label>
+          <input type="email" id="modalEmail" name="entry.1961342581" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group">
+          <label for="modalMessage">Message</label>
+          <textarea id="modalMessage" name="entry.2062203938" placeholder="Write your message here..." required></textarea>
+        </div>
+        <button type="submit" class="modal-submit-btn">Send Message</button>
+      </form>
+      <iframe name="modal_hidden_iframe" style="display:none;"></iframe>
+      <p id="modalSuccessMsg">Thank you! Your message has been sent successfully ✅</p>
+    </div>
+  </div>
+
   <script src="js/main.js"></script>
 </body>
 </html>
